@@ -1,16 +1,18 @@
 import '../../compras_old/entidades/produto.dart';
 import 'cliente.dart';
+import 'repositorio_de_produto.dart';
 
 
-class Venda {
-  final Map<Produto, int> produtos = {};
+class Venda extends RepositorioDeProduto {
   final Cliente cliente;
-  
+
   Venda(this.cliente);
 
   double get valorTotal {
     double total = 0;
-    produtos.forEach((produto, quantidade) {total += produto.preco * quantidade;});
+    produtos.forEach((produto, quantidade) {
+      total += produto.preco * quantidade;
+    });
     return total;
   }
 
@@ -18,11 +20,11 @@ class Venda {
     return produto.preco * quantidadeDe(produto);
   }
 
-  void adicionarProduto(Produto produto, int quantidade) {
-    produtos[produto] = quantidade + quantidadeDe(produto);
-  }
-
-  int quantidadeDe(Produto produto) {
-    return produtos[produto] ?? 0;
+  @override
+  void retirarProduto(Produto produto, int quantidade) {
+    super.retirarProduto(produto, quantidade);
+    if (quantidadeDe(produto) == 0) {
+      produtos.remove(produto);
+    }
   }
 }

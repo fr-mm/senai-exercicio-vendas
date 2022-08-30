@@ -1,0 +1,1 @@
+class ErroQuantidadeDeProdutoIndisponivel extends Error {}
