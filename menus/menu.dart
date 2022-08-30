@@ -11,7 +11,6 @@ Responsabiblidades:
 
 import 'dart:io';
 
-import 'package:test/test.dart';
 
 class Menu {
   late final Map<String, Function> _opcoes;
