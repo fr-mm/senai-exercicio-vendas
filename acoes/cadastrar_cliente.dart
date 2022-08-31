@@ -27,8 +27,7 @@ class CadastrarCliente extends Acao {
   String _perguntarNome() {
     print('Nome do cliente: ');
     String nome = stdin.readLineSync()!;
-    nome.trim();
-    return nome;
+    return nome.trim();
   }
 
   void _validarNomePreenchido(String nome) {
@@ -55,7 +54,7 @@ class CadastrarCliente extends Acao {
 
 // Abaixo está a mesma ação em formato de função
 // deixei aqui para explicar por que prefiro fazer como classe
-// é mais organizado e posso separara as responsabilidades
+// é mais organizado e posso separar as responsabilidades
 // de cada parte
 /*
 void cadastrarCliente(List<Cliente> clientes) {

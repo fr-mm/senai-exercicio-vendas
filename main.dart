@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'acoes/acao.dart';
+import 'acoes/cadastrar_poduto.dart';
 import 'acoes/cadastrar_cliente.dart';
 import 'acoes/listar_clientes.dart';
 import 'entidades/cliente.dart';
@@ -17,7 +18,8 @@ class Main {
   late final Menu menuPrincipal;
   late final Acao
       cadastrarCliente,
-      listarClientes;
+      listarClientes,
+      cadastrarProduto;
 
   Main() {
     _construirAcoes();
@@ -28,9 +30,12 @@ class Main {
   void _construirAcoes() {
     cadastrarCliente = CadastrarCliente(clientes: clientes);
     listarClientes = ListarClientes(clientes: clientes, vendas: vendas);
+    cadastrarProduto = CadastrarProduto(estoque: estoque);
   }
 
   void _construirMenus() {
+    String fraseDepoisPadrao = 'Escolha uma opção';
+
     Menu menuClientes = Menu(
       opcoes: {
         'Voltar': voltar,
@@ -38,16 +43,26 @@ class Main {
         'Listar': listarClientes.executar
       },
       fraseAntes: 'CLIENTES',
-      fraseDepois: 'Escolha uma ação'
+      fraseDepois: fraseDepoisPadrao
+    );
+
+    Menu menuEstoque = Menu(
+      opcoes: {
+        'Voltar': voltar,
+        'Cadastrar produto': cadastrarProduto.executar
+      },
+      fraseAntes: 'ESTOQUE',
+      fraseDepois: fraseDepoisPadrao
     );
 
     menuPrincipal = Menu(
       opcoes: {
         'Sair': sair,
-        'Clientes': menuClientes.executar
+        'Clientes': menuClientes.executar,
+        'Estoque': menuEstoque.executar
       },
       fraseAntes: 'MENU PRINCIPAL',
-      fraseDepois: 'Escolha uma ação'
+      fraseDepois: fraseDepoisPadrao
     );
   }
 
