@@ -33,4 +33,12 @@ class Venda extends RepositorioDeProduto {
       produtos.remove(produto);
     }
   }
+
+  int get quantidadeDeItens {
+    int total = 0;
+    for (int quantidade in produtos.values) {
+      total += quantidade;
+    }
+    return total;
+  }
 }
