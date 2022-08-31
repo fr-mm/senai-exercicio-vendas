@@ -1,13 +1,11 @@
 import 'dart:io';
 
 import 'acoes/cadastrar_cliente.dart';
+import 'acoes/listar_clientes.dart';
 import 'entidades/cliente.dart';
 import 'entidades/estoque.dart';
 import 'entidades/venda.dart';
 import 'menu.dart';
-
-
-void foo() {}
 
 
 class Main {
@@ -18,11 +16,13 @@ class Main {
 
   Main() {
     final cadastrarCliente = CadastrarCliente(clientes: clientes);
+    final listarClientes = ListarClientes(clientes: clientes, vendas: vendas);
 
     Menu menuClientes = Menu(
       opcoes: {
         'Voltar': voltar,
-        'Cadastrar': cadastrarCliente.executar
+        'Cadastrar': cadastrarCliente.executar,
+        'Listar': listarClientes.executar
       },
       fraseAntes: 'CLIENTES',
       fraseDepois: 'Escolha uma ação'
