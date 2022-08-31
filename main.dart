@@ -4,22 +4,26 @@ import 'acoes/acao.dart';
 import 'acoes/cadastrar_poduto.dart';
 import 'acoes/cadastrar_cliente.dart';
 import 'acoes/listar_clientes.dart';
+import 'acoes/listar_produtos.dart';
 import 'entidades/cliente.dart';
 import 'entidades/estoque.dart';
 import 'entidades/produto.dart';
+import 'entidades/repositorio_de_produto.dart';
 import 'entidades/venda.dart';
 import 'menu.dart';
 
 
 class Main {
   final Estoque estoque = Estoque();
+  final RepositorioDeProduto produtosVendidos = RepositorioDeProduto();
   final List<Cliente> clientes = [];
   final List<Venda> vendas = [];
   late final Menu menuPrincipal;
   late final Acao
       cadastrarCliente,
       listarClientes,
-      cadastrarProduto;
+      cadastrarProduto,
+      listarProdutos;
 
   Main() {
     _construirAcoes();
@@ -31,6 +35,7 @@ class Main {
     cadastrarCliente = CadastrarCliente(clientes: clientes);
     listarClientes = ListarClientes(clientes: clientes, vendas: vendas);
     cadastrarProduto = CadastrarProduto(estoque: estoque);
+    listarProdutos = ListarProdutos(estoque: estoque, produtosVendidos: produtosVendidos);
   }
 
   void _construirMenus() {
@@ -49,7 +54,8 @@ class Main {
     Menu menuEstoque = Menu(
       opcoes: {
         'Voltar': voltar,
-        'Cadastrar produto': cadastrarProduto.executar
+        'Cadastrar produto': cadastrarProduto.executar,
+        'Listar produtos': listarProdutos.executar
       },
       fraseAntes: 'ESTOQUE',
       fraseDepois: fraseDepoisPadrao

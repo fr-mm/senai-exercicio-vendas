@@ -22,4 +22,8 @@ class RepositorioDeProduto {
   int quantidadeDe(Produto produto) {
     return produtos[produto] ?? 0;
   }
+  
+  List<Produto> get todosOsProdutos => produtos.keys.toList();
+
+  bool get contemProdutos => produtos.isNotEmpty;
 }
