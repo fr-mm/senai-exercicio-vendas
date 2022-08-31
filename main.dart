@@ -4,6 +4,7 @@ import 'acoes/cadastrar_cliente.dart';
 import 'acoes/listar_clientes.dart';
 import 'entidades/cliente.dart';
 import 'entidades/estoque.dart';
+import 'entidades/produto.dart';
 import 'entidades/venda.dart';
 import 'menu.dart';
 
@@ -38,6 +39,20 @@ class Main {
     );
   }
 
+  void _adicionarItensPadrao() {
+    clientes.addAll([
+      Cliente('Anildo'),
+      Cliente('Chico')
+    ]);
+    estoque.adicionarProduto(
+      produto: Produto(
+          nome: 'Orégano',
+          preco: 200
+      ),
+      quantidade: 50
+    );
+  }
+
   void voltar() {
     return;
   }
@@ -47,6 +62,7 @@ class Main {
   }
 
   void executar() {
+    _adicionarItensPadrao();
     while (true) {
       menuPrincipal.executar();
     }

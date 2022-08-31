@@ -1,11 +1,14 @@
-import '../../compras_old/entidades/produto.dart';
 import '../erros/erro_quantidade_de_produto_indisponivel.dart';
+import 'produto.dart';
 
 
 class RepositorioDeProduto {
   final Map<Produto, int> produtos = {};
 
-  void adicionarProduto(Produto produto, int quantidade) {
+  void adicionarProduto({
+    required Produto produto,
+    required int quantidade
+  }) {
     produtos[produto] = quantidade + quantidadeDe(produto);
   }
 

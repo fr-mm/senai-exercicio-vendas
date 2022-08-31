@@ -2,5 +2,8 @@ class Produto {
   final String nome;
   final double preco;
 
-  Produto(this.nome, this.preco);
+  Produto({
+    required this.nome,
+    required this.preco
+  });
 }

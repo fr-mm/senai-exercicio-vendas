@@ -1,5 +1,5 @@
-import '../../compras_old/entidades/produto.dart';
 import 'cliente.dart';
+import 'produto.dart';
 import 'repositorio_de_produto.dart';
 
 
