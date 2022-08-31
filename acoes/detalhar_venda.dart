@@ -37,7 +37,7 @@ class DetalharVenda extends Acao {
       'ID',
       'CLIENTE',
       'VALOR'
-    ]);
+    ], pad: Menu.tamanhoDoId);
 
   String _construirOpcao(Venda venda) {
       String cliente = '${venda.cliente.nome} (${venda.cliente.id})';

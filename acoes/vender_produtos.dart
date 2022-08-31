@@ -67,7 +67,7 @@ class VenderProdutos extends Acao {
       'PRODUTO',
       'PREÇO',
       'EM ESTOQUE'
-    ]);
+    ], pad: Menu.tamanhoDoId);
     Menu menu = Menu(
       opcoes: _construirOpcoesDeProduto(venda),
       fraseAntes: titulo,

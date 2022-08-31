@@ -40,6 +40,6 @@ class CadastrarCliente extends Acao {
   void _criarCliente(String nome) {
     Cliente cliente = Cliente(nome);
     clientes.add(cliente);
-    print('Cliente ${cliente.nome} (id:${cliente.id})criado');
+    print('Cliente ${cliente.nome} (id:${cliente.id}) criado');
   }
 }

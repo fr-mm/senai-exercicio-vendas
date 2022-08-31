@@ -11,8 +11,11 @@ Responsabiblidades:
 
 import 'dart:io';
 
+import 'formatar.dart';
+
 
 class Menu {
+  static const int tamanhoDoId = 5;
   late final Map<String, Function> opcoes;
   late final String? fraseAntes;
   late final String? fraseDepois;
@@ -29,7 +32,7 @@ class Menu {
   dynamic executar() {
     String resposta;
     do {
-      print('-' * 100);
+      Formatar.quebrarLinha();
       _imprimirOpcional(fraseAntes);
       _mostrarOpcoes();
       _imprimirOpcional(fraseDepois);
@@ -47,7 +50,7 @@ class Menu {
 
   void _mostrarOpcoes() {
     for (int i = 0; i < opcoes.length; i++) {
-      final String id = i.toString().padLeft(2);
+      final String id = i.toString().padLeft(tamanhoDoId - 3);
       final String opcao = _nomesDasOpcoes[i];
       print('$id : $opcao');
     }

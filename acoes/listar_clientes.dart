@@ -41,7 +41,7 @@ class ListarClientes extends Acao {
 
   void _printCliente(Cliente cliente) {
     List<Venda> vendasAtribuidas = _vendasAtribuidasAo(cliente);
-    double valorTotal = _somarValorDeVendas(vendas);
+    double valorTotal = _somarValorDeVendas(cliente);
 
     print(Formatar.colunas([
       cliente.nome,
@@ -54,9 +54,10 @@ class ListarClientes extends Acao {
   List<Venda> _vendasAtribuidasAo(Cliente cliente) =>
       vendas.where((venda) => venda.cliente == cliente).toList();
 
-  double _somarValorDeVendas(List<Venda> vendas) {
+  double _somarValorDeVendas(Cliente cliente) {
+    List<Venda> vendasDoCliente = vendas.where((venda) => venda.cliente == cliente).toList();
     double total = 0;
-    for (Venda venda in vendas) {
+    for (Venda venda in vendasDoCliente) {
       total += venda.valorTotal;
     }
     return total;

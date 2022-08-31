@@ -43,7 +43,7 @@ class CadastrarVenda extends Acao {
   Venda _criarVenda(Cliente cliente) {
     Venda venda = Venda(cliente);
     vendas.add(venda);
-    print('Venda cadastrada: ID ${venda.id}, cliente: ${cliente.nome} (${cliente.id})');
+    print('Venda criada: ID ${venda.id}, cliente: ${cliente.nome} (${cliente.id})');
     return venda;
   }
 }
