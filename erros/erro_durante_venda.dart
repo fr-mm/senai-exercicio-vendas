@@ -1,0 +1,1 @@
+class ErroDuranteVenda extends Error{}

@@ -4,9 +4,11 @@ import 'acoes/acao.dart';
 import 'acoes/cadastrar_poduto.dart';
 import 'acoes/cadastrar_cliente.dart';
 import 'acoes/cadastrar_venda.dart';
+import 'acoes/detalhar_venda.dart';
 import 'acoes/listar_clientes.dart';
 import 'acoes/listar_produtos.dart';
 import 'acoes/listar_vendas.dart';
+import 'acoes/vender_produtos.dart';
 import 'entidades/cliente.dart';
 import 'entidades/estoque.dart';
 import 'entidades/produto.dart';
@@ -27,7 +29,9 @@ class Main {
       cadastrarProduto,
       listarProdutos,
       cadastrarVenda,
-      listarVendas;
+      listarVendas,
+      detalharVenda,
+      venderPrdutos;
 
   Main() {
     _construirAcoes();
@@ -63,6 +67,14 @@ class Main {
     listarVendas = ListarVendas(
         vendas: vendas
     );
+    detalharVenda = DetalharVenda(
+        vendas: vendas
+    );
+    venderPrdutos = VenderProdutos(
+        vendas: vendas,
+        estoque: estoque,
+        produtosVendidos: produtosVendidos
+    );
   }
 
   void _construirMenus() {
@@ -92,7 +104,9 @@ class Main {
         opcoes: {
           'Voltar': voltar,
           'Cadastrar': cadastrarVenda.executar,
-          'Listar': listarVendas.executar
+          'Listar': listarVendas.executar,
+          'Detalhar': detalharVenda.executar,
+          'Vender': venderPrdutos.executar
         },
         fraseAntes: 'VENDAS',
         fraseDepois: fraseDepoisPadrao

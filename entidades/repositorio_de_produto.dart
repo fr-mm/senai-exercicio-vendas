@@ -1,4 +1,3 @@
-import '../erros/erro_quantidade_de_produto_indisponivel.dart';
 import 'produto.dart';
 
 
@@ -13,9 +12,6 @@ class RepositorioDeProduto {
   }
 
   void retirarProduto(Produto produto, int quantidade) {
-    if (!produtos.containsKey(produto) || quantidadeDe(produto) < quantidade) {
-      throw ErroQuantidadeDeProdutoIndisponivel();
-    }
     produtos[produto] = quantidadeDe(produto) - quantidade;
   }
 
