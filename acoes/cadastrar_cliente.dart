@@ -51,30 +51,3 @@ class CadastrarCliente extends Acao {
     print('Cliente ${cliente.nome} criado');
   }
 }
-
-// Abaixo está a mesma ação em formato de função
-// deixei aqui para explicar por que prefiro fazer como classe
-// é mais organizado e posso separar as responsabilidades
-// de cada parte
-/*
-void cadastrarCliente(List<Cliente> clientes) {
-  print('Nome do cliente: ');
-  String nome = stdin.readLineSync()!;
-  nome.trim();
-
-  if (nome.isEmpty) {
-    print('Nome do cliente não pode ser vazio');
-    return;
-  }
-
-  bool nomeRepetido = clientes.any((cliente) => cliente.nome == nome);
-  if (nomeRepetido) {
-    print('Já existe um cliente chamado $nome');
-    return;
-  }
-
-  Cliente cliente = Cliente(nome);
-  clientes.add(cliente);
-  print('Cliente ${cliente.nome} criado');
-}
-*/
