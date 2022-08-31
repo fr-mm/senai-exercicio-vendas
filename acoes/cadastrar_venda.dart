@@ -1,12 +1,10 @@
-import 'dart:io';
-
 import '../entidades/cliente.dart';
 import '../entidades/venda.dart';
 import '../erros/erro_de_validacao.dart';
+import '../menu.dart';
 import 'acao.dart';
 
 class CadastrarVenda extends Acao {
-  static const _msgCadastroCancelado = 'CADASTRO CANCELADO:';
   final List<Venda> vendas;
   final List<Cliente> clientes;
 
@@ -16,43 +14,36 @@ class CadastrarVenda extends Acao {
   });
 
   @override
-  void executar() {
+  Venda? executar() {
     try {
-      _listarClientes();
       Cliente cliente = _perguntarCliente();
-      _criarVenda(cliente);
+      return _criarVenda(cliente);
     }
     on ErroDeValidacao {
-      return;
-    }
-  }
-
-  void _listarClientes() {
-    for (int i = 0; i < clientes.length; i++) {
-      String id = i.toString().padRight(2);
-      print('$id : ${clientes[i].nome}');
+      return null;
     }
   }
 
   Cliente _perguntarCliente() {
-    print('Escolha o cliente:');
-    try {
-      int codigo = int.parse(stdin.readLineSync()!);
-      return clientes[codigo];
-    }
-    on FormatException {
-      print('$_msgCadastroCancelado Deve digitar um número inteiro');
-      throw ErroDeValidacao();
-    }
-    on RangeError {
-      print('$_msgCadastroCancelado Cliente não encontrado');
-      throw ErroDeValidacao();
-    }
+    Menu menu = Menu(
+      opcoes: _opcoesDeCliente,
+      fraseAntes: 'Escolha um cliente: '
+    );
+    return menu.executar();
   }
 
-  void _criarVenda(Cliente cliente) {
+  Map<String, Function> get _opcoesDeCliente {
+    Map<String, Function> opcoes = {};
+    for (Cliente cliente in clientes) {
+      opcoes['${cliente.nome} (${cliente.id})'] = () => cliente;
+    }
+    return opcoes;
+  }
+
+  Venda _criarVenda(Cliente cliente) {
     Venda venda = Venda(cliente);
     vendas.add(venda);
     print('Venda cadastrada: ID ${venda.id}, cliente: ${cliente.nome} (${cliente.id})');
+    return venda;
   }
 }

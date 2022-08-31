@@ -26,7 +26,7 @@ class Menu {
     _nomesDasOpcoes = opcoes.keys.toList();
   }
 
-  void executar() {
+  dynamic executar() {
     String resposta;
     do {
       print('-' * 100);
@@ -36,7 +36,7 @@ class Menu {
       resposta = stdin.readLineSync()!;
     }
     while (!_respostaValida(resposta));
-    _executarOpcaoDeId(resposta);
+    return _executarOpcaoDeId(resposta);
   }
 
   void _imprimirOpcional(String? frase) {
@@ -63,8 +63,8 @@ class Menu {
     }
   }
 
-  void _executarOpcaoDeId(String id) {
+  dynamic _executarOpcaoDeId(String id) {
     String opcao = _nomesDasOpcoes[int.parse(id)];
-    opcoes[opcao]!();
+    return opcoes[opcao]!();
   }
 }

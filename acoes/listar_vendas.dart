@@ -11,8 +11,13 @@ class ListarVendas extends Acao {
 
   @override
   void executar() {
-    _printTitulo();
-    _printVendas();
+    if (vendas.isNotEmpty) {
+      _printTitulo();
+      _printVendas();
+    }
+    else {
+      print('Não existem vendas cadastradas');
+    }
   }
 
   void _printTitulo() {

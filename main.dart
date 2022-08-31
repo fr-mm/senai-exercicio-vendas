@@ -73,7 +73,8 @@ class Main {
     venderPrdutos = VenderProdutos(
         vendas: vendas,
         estoque: estoque,
-        produtosVendidos: produtosVendidos
+        produtosVendidos: produtosVendidos,
+        cadastrarVenda: cadastrarVenda
     );
   }
 
@@ -103,7 +104,6 @@ class Main {
     Menu menuVendas = Menu(
         opcoes: {
           'Voltar': voltar,
-          'Cadastrar': cadastrarVenda.executar,
           'Listar': listarVendas.executar,
           'Detalhar': detalharVenda.executar,
           'Vender': venderPrdutos.executar

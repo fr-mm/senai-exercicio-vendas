@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:test/test.dart';
-
 import '../entidades/estoque.dart';
 import '../entidades/produto.dart';
 import '../entidades/repositorio_de_produto.dart';
@@ -17,14 +15,15 @@ class VenderProdutos extends Acao {
   final List<Venda> vendas;
   final Estoque estoque;
   final RepositorioDeProduto produtosVendidos;
+  final Acao cadastrarVenda;
   late final Menu _menuContinuar;
-  Venda? _vendaSelecionada;
   bool _vendendo = false;
 
   VenderProdutos({
     required this.vendas,
     required this.estoque,
-    required this.produtosVendidos
+    required this.produtosVendidos,
+    required this.cadastrarVenda
   }){
     _menuContinuar = Menu(
       opcoes: {
@@ -38,12 +37,14 @@ class VenderProdutos extends Acao {
   @override
   void executar() {
     try {
-      _validarVendasExistem();
       _validarProdutosExistem();
-      _escolherVenda();
+      Venda venda = _criarVenda();
       _vendendo = true;
       while (_vendendo) {
-        _escolherProduto();
+        try {
+          _escolherProduto(venda);
+        }
+        on ErroDuranteVenda{};
         _menuContinuar.executar();
       }
       _finalizar();
@@ -52,59 +53,35 @@ class VenderProdutos extends Acao {
       return;
     }
   }
-
-  void _escolherVenda() {
-    String titulo = Formatar.colunas([
-      'VENDA',
-      'CLIENTE',
-      'VALOR'
-    ]);
-    Menu menu = Menu(
-      opcoes: _opcoesDeVenda,
-      fraseAntes: titulo,
-      fraseDepois: 'Escolha uma venda:'
-    );
-    menu.executar();
-  }
   
-  Map<String, Function> get _opcoesDeVenda {
-    Map<String, Function> opcoes = {};
-    for (Venda venda in vendas){
-      String opcao = _construirOpcaoDeVenda(venda);
-      opcoes[opcao] = () {_vendaSelecionada = venda;};
+  Venda _criarVenda() {
+    Venda? venda = cadastrarVenda.executar();
+    if (venda == null) {
+      throw ErroDeValidacao();
     }
-    return opcoes;
+    return venda;
   }
-  
-  String _construirOpcaoDeVenda(Venda venda) {
-    String cliente = '${venda.cliente.nome} (${venda.cliente.id})';
-    return Formatar.colunas([
-      venda.id,
-      cliente,
-      Formatar.dinheiro(venda.valorTotal)
-    ]);
-  }
-  
-  void _escolherProduto() {
+
+  void _escolherProduto(Venda venda) {
     String titulo = Formatar.colunas([
       'PRODUTO',
       'PREÇO',
       'EM ESTOQUE'
     ]);
     Menu menu = Menu(
-      opcoes: _opcoesDeProduto,
+      opcoes: _construirOpcoesDeProduto(venda),
       fraseAntes: titulo,
       fraseDepois: 'Escolha um produto:'
     );
     menu.executar();
   }
   
-  Map<String, Function> get _opcoesDeProduto {
+  Map<String, Function> _construirOpcoesDeProduto(Venda venda) {
     Map<String, Function> opcoes = {};
     for (Produto produto in estoque.todosOsProdutos){
       if (estoque.quantidadeDe(produto) > 0) {
         String opcao = _construirOpcaoDeProduto(produto);
-        opcoes[opcao] = () {_vender(produto);};
+        opcoes[opcao] = () {_vender(venda, produto);};
       }
     }
     return opcoes;
@@ -118,9 +95,10 @@ class VenderProdutos extends Acao {
     ]);
   }
   
-  void _vender(Produto produto) {
+  void _vender(Venda venda, Produto produto) {
     int quantidade = _perguntarQuantidade(produto);
-    _vendaSelecionada!.adicionarProduto(produto: produto, quantidade: quantidade);
+    estoque.retirarProduto(produto, quantidade);
+    venda.adicionarProduto(produto: produto, quantidade: quantidade);
     produtosVendidos.adicionarProduto(produto: produto, quantidade: quantidade);
     double custo = produto.preco * quantidade;
     print('$quantidade unidades de ${produto.nome} vendidas por ${Formatar.dinheiro(custo)}');
@@ -144,15 +122,8 @@ class VenderProdutos extends Acao {
   }
 
   void _finalizar() {
+    //TODO: relatorio
     print('Venda finalizada');
-    _vendaSelecionada = null;
-  }
-
-  void _validarVendasExistem() {
-    if (vendas.isEmpty) {
-      print('Crie uma venda atribuída a um cliente para poder vender produtos');
-      throw ErroDeValidacao();
-    }
   }
 
   void _validarProdutosExistem() {
@@ -172,7 +143,7 @@ class VenderProdutos extends Acao {
   void _validarQuantidadeDisponivel(int quantidade, Produto produto) {
     int emEstoque = estoque.quantidadeDe(produto);
     if (quantidade > emEstoque) {
-      print('Não é possível comprar $quantidade unidades de ${produto.nome}, só tem $emEstoque em estoque');
+      print('Não é possível vender $quantidade unidades de ${produto.nome}, só tem $emEstoque em estoque');
       throw ErroDuranteVenda();
     }
   }
