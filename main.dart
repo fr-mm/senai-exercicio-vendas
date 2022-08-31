@@ -5,6 +5,7 @@ import 'acoes/cadastrar_poduto.dart';
 import 'acoes/cadastrar_cliente.dart';
 import 'acoes/cadastrar_venda.dart';
 import 'acoes/detalhar_venda.dart';
+import 'acoes/gerar_relatorio.dart';
 import 'acoes/listar_clientes.dart';
 import 'acoes/listar_produtos.dart';
 import 'acoes/listar_vendas.dart';
@@ -31,7 +32,8 @@ class Main {
       cadastrarVenda,
       listarVendas,
       detalharVenda,
-      venderPrdutos;
+      venderPrdutos,
+      gerarRelatorio;
 
   Main() {
     _construirAcoes();
@@ -76,6 +78,12 @@ class Main {
         produtosVendidos: produtosVendidos,
         cadastrarVenda: cadastrarVenda
     );
+    gerarRelatorio = GerarRelatorio(
+        estoque: estoque,
+        produtosVendidos: produtosVendidos,
+        clientes: clientes,
+        vendas: vendas
+    );
   }
 
   void _construirMenus() {
@@ -117,7 +125,8 @@ class Main {
           'Sair': sair,
           'Clientes': menuClientes.executar,
           'Estoque': menuEstoque.executar,
-          'Vendas': menuVendas.executar
+          'Vendas': menuVendas.executar,
+          'Relatório': gerarRelatorio.executar
         },
         fraseAntes: 'MENU PRINCIPAL',
         fraseDepois: fraseDepoisPadrao
