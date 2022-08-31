@@ -1,5 +1,3 @@
 import 'repositorio_de_produto.dart';
 
-class Estoque extends RepositorioDeProduto {
-  
-}
+class Estoque extends RepositorioDeProduto {}

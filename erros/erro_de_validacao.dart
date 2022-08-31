@@ -1,0 +1,1 @@
+class ErroDeValidacao extends Error {}

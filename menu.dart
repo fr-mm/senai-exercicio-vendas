@@ -13,21 +13,26 @@ import 'dart:io';
 
 
 class Menu {
-  late final Map<String, Function> _opcoes;
-  late final String? _fraseAntes;
-  late final String? _fraseDepois;
+  late final Map<String, Function> opcoes;
+  late final String? fraseAntes;
+  late final String? fraseDepois;
   late final List<String> _nomesDasOpcoes;
 
-  Menu(this._opcoes, [this._fraseAntes, this._fraseDepois]) {
-    _nomesDasOpcoes = _opcoes.keys.toList();
+  Menu({
+    required this.opcoes,
+    this.fraseAntes,
+    this.fraseDepois
+  }) {
+    _nomesDasOpcoes = opcoes.keys.toList();
   }
 
   void executar() {
     String resposta;
     do {
-      _imprimirOpcional(_fraseAntes);
+      print('-' * 100);
+      _imprimirOpcional(fraseAntes);
       _mostrarOpcoes();
-      _imprimirOpcional(_fraseDepois);
+      _imprimirOpcional(fraseDepois);
       resposta = stdin.readLineSync()!;
     }
     while (!_respostaValida(resposta));
@@ -41,7 +46,7 @@ class Menu {
   }
 
   void _mostrarOpcoes() {
-    for (int i = 0; i < _opcoes.length; i++) {
+    for (int i = 0; i < opcoes.length; i++) {
       final String id = i.toString().padLeft(2);
       final String opcao = _nomesDasOpcoes[i];
       print('$id : $opcao');
@@ -51,7 +56,7 @@ class Menu {
   bool _respostaValida(String resposta) {
     try {
       final int id = int.parse(resposta);
-      return 0 <= id && id < _opcoes.length;
+      return 0 <= id && id < opcoes.length;
     }
     on FormatException {
       return false;
@@ -60,6 +65,6 @@ class Menu {
 
   void _executarOpcaoDeId(String id) {
     String opcao = _nomesDasOpcoes[int.parse(id)];
-    _opcoes[opcao]!();
+    opcoes[opcao]!();
   }
 }
