@@ -2,14 +2,16 @@ import 'dart:io';
 
 import '../entidades/cliente.dart';
 import '../erros/erro_de_validacao.dart';
+import 'acao.dart';
 
-class CadastrarCliente {
+class CadastrarCliente extends Acao {
   final List<Cliente> clientes;
 
   CadastrarCliente({
     required this.clientes
   });
 
+  @override
   void executar() {
     String nome = _perguntarNome();
     try {

@@ -1,9 +1,10 @@
 import '../entidades/cliente.dart';
 import '../entidades/venda.dart';
 import '../formatar.dart';
+import 'acao.dart';
 
 
-class ListarClientes {
+class ListarClientes extends Acao {
   final List<Cliente> clientes;
   final List<Venda> vendas;
 
@@ -12,6 +13,7 @@ class ListarClientes {
     required this.vendas
   });
 
+  @override
   void executar() {
     if (clientes.isNotEmpty) {
       _printTitulo();
