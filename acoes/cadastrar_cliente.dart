@@ -5,6 +5,7 @@ import '../erros/erro_de_validacao.dart';
 import 'acao.dart';
 
 class CadastrarCliente extends Acao {
+  static const _msgCadastroCancelado = 'CADASTRO CANCELADO:';
   final List<Cliente> clientes;
 
   CadastrarCliente({
@@ -32,7 +33,7 @@ class CadastrarCliente extends Acao {
 
   void _validarNomePreenchido(String nome) {
     if (nome.isEmpty) {
-      print('Nome do cliente não pode ser vazio');
+      print('$_msgCadastroCancelado Nome do cliente não pode ser vazio');
       throw ErroDeValidacao();
     }
   }
@@ -40,7 +41,7 @@ class CadastrarCliente extends Acao {
   void _validarNomeUnico(String nome) {
     bool nomeRepetido = clientes.any((cliente) => cliente.nome == nome);
     if (nomeRepetido) {
-      print('Já existe um cliente chamado $nome');
+      print('$_msgCadastroCancelado Já existe um cliente chamado $nome');
       throw ErroDeValidacao();
     }
   }
