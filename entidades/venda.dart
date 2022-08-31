@@ -4,9 +4,15 @@ import 'repositorio_de_produto.dart';
 
 
 class Venda extends RepositorioDeProduto {
+  static int _proximoId = 0;
+  late final String id;
   final Cliente cliente;
 
-  Venda(this.cliente);
+
+  Venda(this.cliente) {
+    id = _proximoId.toString().padLeft(4, '0');
+    _proximoId++;
+  }
 
   double get valorTotal {
     double total = 0;

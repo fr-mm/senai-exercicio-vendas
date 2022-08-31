@@ -17,7 +17,6 @@ class CadastrarCliente extends Acao {
     String nome = _perguntarNome();
     try {
       _validarNomePreenchido(nome);
-      _validarNomeUnico(nome);
       _criarCliente(nome);
     }
     on ErroDeValidacao {
@@ -38,17 +37,9 @@ class CadastrarCliente extends Acao {
     }
   }
 
-  void _validarNomeUnico(String nome) {
-    bool nomeRepetido = clientes.any((cliente) => cliente.nome == nome);
-    if (nomeRepetido) {
-      print('$_msgCadastroCancelado Já existe um cliente chamado $nome');
-      throw ErroDeValidacao();
-    }
-  }
-
   void _criarCliente(String nome) {
     Cliente cliente = Cliente(nome);
     clientes.add(cliente);
-    print('Cliente ${cliente.nome} criado');
+    print('Cliente ${cliente.nome} (id:${cliente.id})criado');
   }
 }

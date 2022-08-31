@@ -3,6 +3,7 @@ import 'dart:io';
 import 'acoes/acao.dart';
 import 'acoes/cadastrar_poduto.dart';
 import 'acoes/cadastrar_cliente.dart';
+import 'acoes/cadastrar_venda.dart';
 import 'acoes/listar_clientes.dart';
 import 'acoes/listar_produtos.dart';
 import 'entidades/cliente.dart';
@@ -23,7 +24,8 @@ class Main {
       cadastrarCliente,
       listarClientes,
       cadastrarProduto,
-      listarProdutos;
+      listarProdutos,
+      cadastrarVenda;
 
   Main() {
     _construirAcoes();
@@ -31,44 +33,74 @@ class Main {
     _adicionarItensPadrao();
   }
 
+  void executar() {
+    while (true) {
+      menuPrincipal.executar();
+    }
+  }
+
   void _construirAcoes() {
-    cadastrarCliente = CadastrarCliente(clientes: clientes);
-    listarClientes = ListarClientes(clientes: clientes, vendas: vendas);
-    cadastrarProduto = CadastrarProduto(estoque: estoque);
-    listarProdutos = ListarProdutos(estoque: estoque, produtosVendidos: produtosVendidos);
+    cadastrarCliente = CadastrarCliente(
+        clientes: clientes
+    );
+    listarClientes = ListarClientes(
+        clientes: clientes,
+        vendas: vendas
+    );
+    cadastrarProduto = CadastrarProduto(
+        estoque: estoque
+    );
+    listarProdutos = ListarProdutos(
+        estoque: estoque,
+        produtosVendidos: produtosVendidos
+    );
+    cadastrarVenda = CadastrarVenda(
+        vendas: vendas,
+        clientes: clientes
+    );
   }
 
   void _construirMenus() {
     String fraseDepoisPadrao = 'Escolha uma opção';
 
     Menu menuClientes = Menu(
-      opcoes: {
-        'Voltar': voltar,
-        'Cadastrar': cadastrarCliente.executar,
-        'Listar': listarClientes.executar
-      },
-      fraseAntes: 'CLIENTES',
-      fraseDepois: fraseDepoisPadrao
+        opcoes: {
+          'Voltar': voltar,
+          'Cadastrar': cadastrarCliente.executar,
+          'Listar': listarClientes.executar
+        },
+        fraseAntes: 'CLIENTES',
+        fraseDepois: fraseDepoisPadrao
     );
 
     Menu menuEstoque = Menu(
-      opcoes: {
-        'Voltar': voltar,
-        'Cadastrar produto': cadastrarProduto.executar,
-        'Listar produtos': listarProdutos.executar
-      },
-      fraseAntes: 'ESTOQUE',
-      fraseDepois: fraseDepoisPadrao
+        opcoes: {
+          'Voltar': voltar,
+          'Cadastrar produto': cadastrarProduto.executar,
+          'Listar produtos': listarProdutos.executar
+        },
+        fraseAntes: 'ESTOQUE',
+        fraseDepois: fraseDepoisPadrao
+    );
+
+    Menu menuVendas = Menu(
+        opcoes: {
+          'Voltar': voltar,
+          'Cadastrar venda': cadastrarVenda.executar
+        },
+        fraseAntes: 'VENDAS',
+        fraseDepois: fraseDepoisPadrao
     );
 
     menuPrincipal = Menu(
-      opcoes: {
-        'Sair': sair,
-        'Clientes': menuClientes.executar,
-        'Estoque': menuEstoque.executar
-      },
-      fraseAntes: 'MENU PRINCIPAL',
-      fraseDepois: fraseDepoisPadrao
+        opcoes: {
+          'Sair': sair,
+          'Clientes': menuClientes.executar,
+          'Estoque': menuEstoque.executar,
+          'Vendas': menuVendas.executar
+        },
+        fraseAntes: 'MENU PRINCIPAL',
+        fraseDepois: fraseDepoisPadrao
     );
   }
 
@@ -78,11 +110,11 @@ class Main {
       Cliente('Chico')
     ]);
     estoque.adicionarProduto(
-      produto: Produto(
-          nome: 'Orégano',
-          preco: 200
-      ),
-      quantidade: 50
+        produto: Produto(
+            nome: 'Orégano',
+            preco: 200
+        ),
+        quantidade: 50
     );
   }
 
@@ -92,12 +124,6 @@ class Main {
 
   void sair() {
     exit(0);
-  }
-
-  void executar() {
-    while (true) {
-      menuPrincipal.executar();
-    }
   }
 }
 

@@ -26,7 +26,8 @@ class ListarClientes extends Acao {
 
   void _printTitulo() {
     print(Formatar.colunas([
-      'CLIENTE',
+      'NOME',
+      'ID',
       'VENDAS ATRIBUÍDAS',
       'TOTAL COMPRADO'
     ]));
@@ -44,6 +45,7 @@ class ListarClientes extends Acao {
 
     print(Formatar.colunas([
       cliente.nome,
+      cliente.id,
       vendasAtribuidas.length.toString(),
       Formatar.dinheiro(valorTotal)
     ]));
